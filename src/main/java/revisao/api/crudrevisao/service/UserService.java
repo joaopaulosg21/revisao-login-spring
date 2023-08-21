@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import revisao.api.crudrevisao.common.CommonResponse;
-import revisao.api.crudrevisao.exceptions.EmailAlreadyUsedException;
+import revisao.api.crudrevisao.exceptions.user.EmailAlreadyUsedException;
 import revisao.api.crudrevisao.model.LoginDTO;
 import revisao.api.crudrevisao.model.User;
 import revisao.api.crudrevisao.repository.UserRepository;

@@ -1,4 +1,4 @@
-package revisao.api.crudrevisao.exceptions;
+package revisao.api.crudrevisao.exceptions.user;
 
 public class LoginException extends RuntimeException {
 

@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import revisao.api.crudrevisao.exceptions.LoginException;
+import revisao.api.crudrevisao.exceptions.user.LoginException;
 import revisao.api.crudrevisao.model.LoginDTO;
 import revisao.api.crudrevisao.model.User;
 import revisao.api.crudrevisao.repository.UserRepository;
