@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import revisao.api.crudrevisao.common.CommonResponse;
+import revisao.api.crudrevisao.model.LoginDTO;
 import revisao.api.crudrevisao.model.User;
 import revisao.api.crudrevisao.service.UserService;
 
@@ -20,5 +21,10 @@ public class UserController {
     @PostMapping
     public ResponseEntity<CommonResponse<User>> create(@RequestBody User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<CommonResponse<?>> login(@RequestBody LoginDTO loginDTO) {
+        return ResponseEntity.ok(userService.login(loginDTO));
     }
 }
