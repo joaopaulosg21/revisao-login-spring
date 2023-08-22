@@ -7,10 +7,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import revisao.api.crudrevisao.common.CommonResponse;
 import revisao.api.crudrevisao.configuration.auth.TokenService;
 import revisao.api.crudrevisao.exceptions.user.EmailAlreadyUsedException;
+import revisao.api.crudrevisao.model.LoginDTO;
 import revisao.api.crudrevisao.model.User;
 import revisao.api.crudrevisao.repository.UserRepository;
 import revisao.api.crudrevisao.service.UserService;
@@ -67,5 +70,20 @@ public class UserUnitTests {
         EmailAlreadyUsedException exception = assertThrows(EmailAlreadyUsedException.class,() -> userService.create(user));
 
         assertEquals("Email is already in use",exception.getMessage());
+    }
+
+    @Test
+    public void loginTest() {
+        LoginDTO loginDTO = new LoginDTO("test@email.com","123");
+
+        User user = new User("test name","test@email.com","123");
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user,loginDTO);
+        when(authenticationManager.authenticate(any(Authentication.class))).thenReturn(auth);
+        when(tokenService.generate(any(Authentication.class))).thenReturn("token");
+
+
+        CommonResponse<String> response = userService.login(loginDTO);
+
+        assertEquals("Login successfully",response.message());
     }
 }
