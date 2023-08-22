@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import revisao.api.crudrevisao.common.CommonResponse;
+import revisao.api.crudrevisao.configuration.auth.TokenService;
 import revisao.api.crudrevisao.exceptions.user.EmailAlreadyUsedException;
 import revisao.api.crudrevisao.model.LoginDTO;
 import revisao.api.crudrevisao.model.User;
@@ -24,6 +25,8 @@ public class UserService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final TokenService tokenService;
+
     public CommonResponse<User> create(User user) {
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
 
@@ -38,10 +41,10 @@ public class UserService {
         return new CommonResponse<>(saved,"User created successfully");
     }
 
-    public CommonResponse<?> login(LoginDTO loginDTO) {
+    public CommonResponse<String> login(LoginDTO loginDTO) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(null,loginDTO);
         Authentication auth = authenticationManager.authenticate(authentication);
-
-        return new CommonResponse<>(auth,"Login successfully");
+        String token = tokenService.generate(auth);
+        return new CommonResponse<>(token,"Login successfully");
     }
 }

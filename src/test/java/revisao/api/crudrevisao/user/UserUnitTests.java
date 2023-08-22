@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import revisao.api.crudrevisao.common.CommonResponse;
+import revisao.api.crudrevisao.configuration.auth.TokenService;
 import revisao.api.crudrevisao.exceptions.user.EmailAlreadyUsedException;
 import revisao.api.crudrevisao.model.User;
 import revisao.api.crudrevisao.repository.UserRepository;
@@ -32,11 +33,14 @@ public class UserUnitTests {
     @Mock
     private AuthenticationManager authenticationManager;
 
+    @Mock
+    private TokenService tokenService;
+
     private UserService userService;
 
     @BeforeEach
     private void setup() {
-        userService = new UserService(userRepository,passwordEncoder,authenticationManager);
+        userService = new UserService(userRepository,passwordEncoder,authenticationManager,tokenService);
     }
 
     @Test
