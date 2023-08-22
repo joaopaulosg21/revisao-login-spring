@@ -13,6 +13,7 @@ import revisao.api.crudrevisao.model.LoginDTO;
 import revisao.api.crudrevisao.model.User;
 import revisao.api.crudrevisao.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,5 +47,9 @@ public class UserService {
         Authentication auth = authenticationManager.authenticate(authentication);
         String token = tokenService.generate(auth);
         return new CommonResponse<>(token,"Login successfully");
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

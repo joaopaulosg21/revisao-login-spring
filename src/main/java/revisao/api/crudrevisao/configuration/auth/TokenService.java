@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import revisao.api.crudrevisao.model.User;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Service
 public class TokenService {
@@ -31,11 +32,17 @@ public class TokenService {
     }
 
     public boolean isValid(String token) {
+        if(Objects.isNull(token)) return false;
         try {
             Jwts.parserBuilder().setSigningKey(secret.getBytes()).build().parseClaimsJws(token);
             return true;
         }catch (Exception e) {
             return false;
         }
+    }
+
+    public long getIdFromSubject(String token) {
+        String body = Jwts.parserBuilder().setSigningKey(secret.getBytes()).build().parseClaimsJws(token).getBody().getSubject();
+        return Long.parseLong(body);
     }
 }
